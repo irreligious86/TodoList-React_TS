@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import './App.css';
-import {Todolist} from "./Todolist";
+import classes from  './App.module.css';
+import {Todolist} from "./components/Todolist/Todolist";
 
 
 export type TaskType = {
@@ -45,7 +45,7 @@ function App() {
     }
 
     return (
-        <div className="App">
+        <div className={classes['App']}>
             <Todolist
                 title="What to learn"
                 tasks={tasksForRender}
