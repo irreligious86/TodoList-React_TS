@@ -1,5 +1,6 @@
 import React from "react";
-import {FilterValuesType, TaskType} from "./App";
+import {FilterValuesType, TaskType} from "../../App";
+import classes from "./todolist.module.css";
 
 type TodolistPropsType = {
     title: string,
@@ -12,10 +13,12 @@ export function Todolist(props: TodolistPropsType) {
 
     const mapTaskObjectToListItem =  (task: TaskType)  => {
         return (
-            <li key={task.id}>
+            <li className={classes['todolist-item']}
+                key={task.id}>
                 <input type="checkbox" checked={task.isDone}/>
                 <span>{task.title}</span>
                 <button
+                    className={classes['btn-remove']}
                     onClick={ () => props.removeTask(task.id) }
                 >x</button>
             </li>
@@ -24,26 +27,34 @@ export function Todolist(props: TodolistPropsType) {
 
 
     return (
-        <div>
-            <h3>{props.title}</h3>
-            <div>
-                <input/>
+        <>
+            <h3 className={classes['todolist-title']}>{props.title}</h3>
+            <div className={classes['todolist-body']}>
+                <input
+                className={classes['search-input']}
+                />
                 <button>+</button>
             </div>
-            <ul>
+            <ul className={classes['todolist-ul']}>
                 {props.tasks.map( mapTaskObjectToListItem )}
             </ul>
             <div>
-                <button onClick={ ()=>props.changeFilter
+                <button
+                    className={classes['btn']}
+                    onClick={ ()=>props.changeFilter
                 ("all")}
                 >All</button>
-                <button onClick={ ()=>props.changeFilter
+                <button
+                    className={classes['btn']}
+                    onClick={ ()=>props.changeFilter
                 ("active")}
                 >Active</button>
-                <button onClick={ ()=>props.changeFilter
+                <button
+                    className={classes['btn']}
+                    onClick={ ()=>props.changeFilter
                 ("completed")}
                 >Completed</button>
             </div>
-        </div>
+        </>
     )
 }
