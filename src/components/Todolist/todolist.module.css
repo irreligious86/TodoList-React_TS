@@ -16,6 +16,7 @@
     list-style-type: none;
     padding: 5px;
     margin: 5px;
+    width: clamp(150px, 95%, 450px);
 }
 
 .todolist-item {
