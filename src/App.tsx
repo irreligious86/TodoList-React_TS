@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import classes from  './App.module.css';
-import {Todolist} from "./components/Todolist/Todolist";
+import {Todolist} from "./components/Todolist/todolist";
 import {v1} from "uuid";
 
 
