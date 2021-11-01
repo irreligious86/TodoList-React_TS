@@ -42,7 +42,6 @@ function App() {
                 title="What to learn"
                 tasks={tasks}
                 removeTask={removeTask}
-                // changeFilter={changeFilter}
                 addTask={addTask}
             />
         </div>
