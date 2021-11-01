@@ -8,22 +8,23 @@ type TodolistPropsType = {
     title: string,
     tasks: Array<TaskType>
     removeTask: (taskID: string) => void
-    // changeFilter: (filter: FilterValuesType) => void
     addTask: (title: string) => void
 }
 
-export function Todolist(props: TodolistPropsType) {
+export function Todolist({tasks, removeTask, ...props}: TodolistPropsType) {
+
+    let [title, setTitle] = useState<string>('Task from local state')
 
     let [filter, setFilter] = useState<FilterValuesType>("all")
 
-    let tasksForRender = props.tasks
+    let tasksForTodolist = tasks
 
     if ( filter === "active" ) {
-        tasksForRender = tasksForRender.filter(t => t.isDone === false)
+        tasksForTodolist = tasks.filter(t => !t.isDone)
     }
 
     if ( filter === "completed" ) {
-        tasksForRender = tasksForRender.filter(t => t.isDone === true)
+        tasksForTodolist = tasks.filter(t => t.isDone)
     }
 
     const changeFilter = (filter: FilterValuesType) => {
@@ -42,8 +43,6 @@ export function Todolist(props: TodolistPropsType) {
         changeFilter(filter)
     }
 
-    const [title, setTitle] = useState<string>('Task from local state')
-
     const addTask = () => {
         if (title) {
             props.addTask(title)
@@ -53,7 +52,7 @@ export function Todolist(props: TodolistPropsType) {
 
     const mapTaskObjectToListItem = (task: TaskType) => {
 
-        const onClickHandler = () => props.removeTask(task.id)
+        const onClickHandler = () => removeTask(task.id)
 
         return (
             <li className={classes['todolist-item']}
@@ -82,7 +81,7 @@ export function Todolist(props: TodolistPropsType) {
                 />
             </div>
             <ul className={classes['todolist-ul']}>
-                {tasksForRender.map(mapTaskObjectToListItem)}
+                {tasksForTodolist.map(mapTaskObjectToListItem)}
             </ul>
             <div>
                 <Button
