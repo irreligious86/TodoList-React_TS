@@ -1,18 +1,34 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {FilterValuesType, TaskType} from "../../App";
 import classes from "./todolist.module.css";
-import {Button} from "../Button/button";
+import {Button} from "../Button/Button";
 
 
 type TodolistPropsType = {
     title: string,
     tasks: Array<TaskType>
     removeTask: (taskID: string) => void
-    changeFilter: (filter: FilterValuesType) => void
+    // changeFilter: (filter: FilterValuesType) => void
     addTask: (title: string) => void
 }
 
 export function Todolist(props: TodolistPropsType) {
+
+    let [filter, setFilter] = useState<FilterValuesType>("all")
+
+    let tasksForRender = props.tasks
+
+    if ( filter === "active" ) {
+        tasksForRender = tasksForRender.filter(t => t.isDone === false)
+    }
+
+    if ( filter === "completed" ) {
+        tasksForRender = tasksForRender.filter(t => t.isDone === true)
+    }
+
+    const changeFilter = (filter: FilterValuesType) => {
+        setFilter(filter)
+    }
 
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setTitle(event.currentTarget.value)
@@ -23,7 +39,7 @@ export function Todolist(props: TodolistPropsType) {
     }
 
     const changeFilterX = (filter: FilterValuesType) => {
-        props.changeFilter(filter)
+        changeFilter(filter)
     }
 
     const [title, setTitle] = useState<string>('Task from local state')
@@ -49,6 +65,7 @@ export function Todolist(props: TodolistPropsType) {
         )
     }
 
+
     return (
         <>
             <h3 className={classes['todolist-title']}>{props.title}</h3>
@@ -65,7 +82,7 @@ export function Todolist(props: TodolistPropsType) {
                 />
             </div>
             <ul className={classes['todolist-ul']}>
-                {props.tasks.map(mapTaskObjectToListItem)}
+                {tasksForRender.map(mapTaskObjectToListItem)}
             </ul>
             <div>
                 <Button
